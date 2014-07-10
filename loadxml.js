@@ -32,12 +32,6 @@ function LoadXMLDom(ParentElementID, xmlDoc) {
 		var Result = ShowXML(xmlHolderElement, xmlDoc.documentElement, 0);
 
 		var ReferenceElement = document.createElement('div');
-//TODO - place source links in configuration page.
-		//		var Link = document.createElement('a');		
-		//		Link.setAttribute('href','http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html');
-		//		var TextNode = document.createTextNode('Source: Lev Muchnik');
-		//		Link.appendChild(TextNode);
-		//		xmlHolderElement.appendChild(Link);
 		return Result;
 	} else {
 		return false;

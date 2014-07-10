@@ -7,8 +7,8 @@
 		"css": 			  		[ "loadxml.css" ],
 		"js":             		[ "injector.js" ],
 		"matches":        		[ "file://*/*",
-								  "http://*/*",
-								  "https://*/*"
+								  "http://*/teamworks/debug.lsw*",
+								  "https://*/teamworks/debug.lsw*"
 								],
 		"run_at": "document_end"
 	} ],
@@ -17,8 +17,15 @@
 								  "loadxml.js",
 								  "embeddedXMLViewer.js"
 								],
+	"icons": { "16": "bug_iibpd_16.png", "32": "bug_iibpd_32.png", "48": "bug_iibpd_48.png", "128": "bug_iibpd_128.png" },
+	"browser_action": {
+          "default_icon": { "19": "bug_iibpd_32.png", "38": "bug_iibpd_48.png"},
+          "default_title": "Configure iibpd",
+          "default_popup": "options.html"
+        },
+	"options_page": "options.html",
 	"converted_from_user_script": true,
 	"description":  "Convert HTML encoded XML in 'pre' elements to a colourised, collapsible view. Intended for use with IBM BPM Debug output. Also adds hotkeys for 'Step Over' (SHIFT-S), 'Step' (S, Enter, or Right Arrow), and 'Run' (R). Based on Lev Muchnik's LoadXML, and using Robert Reid's htmlEncode.",
 	"name":         "Embedded XML Viewer",
-	"version":      "1.0"
+	"version":      "1.1"
 }
