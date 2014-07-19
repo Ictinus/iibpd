@@ -1,38 +1,49 @@
 @charset "utf-8";
 /* CSS Document */
 .Utility {
-		color: black;
-}	
+        color: black;
+}   
 .NodeName {
-	font-weight:bold;
-	color: #800080;	
+    font-weight:bold;
+    color: #800080; 
 }
 .AttributeName {
-	font-weight:bold;
-	color: black;
+    font-weight:bold;
+    color: black;
 }
 .AttributeValue {
-	color:blue;
+    color:blue;
 }
 .NodeValue {
-	color: green;
+    color: green;
 }
 .Element {
-	border-left-color:#C2C2C2;
-	border-left-width:thin;
-	border-left-style:solid;
-	padding-top:0px;
-	/*margin-top:10px;*/
-	margin: 2px 0px;
-	position: relative;
+    border-left-color:#C2C2C2;
+    border-left-width:thin;
+    border-left-style:solid;
+    padding-top:0px;
+    /*margin-top:10px;*/
+    margin: 2px 0px;
+    position: relative;
 }
-.Clickable {	
-	font-weight:900;
-	font-size:large;
-	color: #800080;	
-	cursor:pointer;
-	padding-left: 5px;
-	padding-right:5px;
-	vertical-align:middle;
-	user-select: none;
+.Clickable {    
+    font-weight:900;
+    font-size:large;
+    color: #800080; 
+    cursor:pointer;
+    padding-left: 5px;
+    padding-right:5px;
+    vertical-align:middle;
+    user-select: none;
+}
+
+.metadata { 
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.8s ease-in;
+}
+.hide_metadata {
+    max-height: 0;
+    transition: max-height 0.8s ease-out;
+    overflow: hidden;
 }

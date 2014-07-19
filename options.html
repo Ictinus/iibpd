@@ -2,24 +2,13 @@
 <head>
 <title>
 iibpd options</title>
-<style>body {width: 300px; } h4 {margin: 0.8em 0px 0.2em 0px } ul {margin-top:0.5em}.content {margin: 5px 5px;} .banner { padding: 0.5em; margin: 0px;
-width: auto;
-background: #CEE3F8;
--webkit-border-bottom-right-radius: 4px;
--webkit-border-bottom-left-radius: 4px;
--moz-border-radius-bottomright: 4px;
--moz-border-radius-bottomleft: 4px;
-border-bottom-right-radius: 4px;
-border-bottom-left-radius: 4px;
-text-align:center;
-vertical-align:middle;
-	 }</style>
+<LINK REL="stylesheet" HREF="options.css" TYPE="text/css">
 </head>
 <body>
 <div class="banner">Improved IBM BPM Process Debugger</div>
 <div id="config" class="content">
 <h4>Configuration</h4>
-<input type=checkbox id=hide_metadata>Hide Metadata (not yet implemented)</input>
+<input type=checkbox id="hide_metadata">Hide Metadata</input>
 </div>
 <div id="hotkeys" class="content">
 <h4>Action/Hotkeys</h4>
@@ -28,11 +17,15 @@ vertical-align:middle;
 <div>Run: R</div>
 </div>
 <div id="thanks" class="content">
-	<h4>With thanks to:</h4>
-	<ul>
-		<li>Lev Muchnik's <a href="http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html">LoadXML</a></li>
-		<li>Robert Reid's <a href="http://www.strictly-software.com/htmlencode">htmlEncode</a></li>
-	</ul> 
+    <h4>With thanks to:</h4>
+    <ul>
+        <li>Lev Muchnik's <a href="http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html">LoadXML</a></li>
+        <li>Robert Reid's <a href="http://www.strictly-software.com/htmlencode">htmlEncode</a></li>
+    </ul> 
+</div>
+<div>
+<button id="save">Save</button><span id="status"></span>
 </div>
 </body>
+<script src="options.js"></script>
 </html>

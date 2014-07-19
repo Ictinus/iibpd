@@ -113,7 +113,7 @@ function CreateXMLDOM(XMLStr) {
 		return parser.parseFromString(XMLStr, "text/xml");
 	} else {
 		return null;
-	}Ad
+	}
 }
 
 var IDCounter = 1;
@@ -126,6 +126,10 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	var TagEmptyElement = document.createElement('div');
 	TagEmptyElement.className = 'Element';
 	
+	if (RootNode.nodeName === "metadata") {
+		TagEmptyElement.classList.add("metadata"); //to allow hiding of metadata elements
+	}
+	
 	if (indent != 0) {
 		TagEmptyElement.style.left = NestingIndent + 'px';
 	}
@@ -137,7 +141,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
 			AddTextNode(TagEmptyElement, '=', 'Utility');
-			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.nodeValue + '"', 'AttributeValue');
+			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
 		AddTextNode(TagEmptyElement, ' />');
 		xmlHolderElement.appendChild(TagEmptyElement);
@@ -174,7 +178,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
 			AddTextNode(TagEmptyElement, '=', 'Utility');
-			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.nodeValue + '"', 'AttributeValue');
+			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
 		AddTextNode(TagEmptyElement, '>', 'Utility');
 
@@ -197,7 +201,11 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			// build uncollapsed display elements
 			var TagElement = document.createElement('div');
 			TagElement.className = 'Element';
-		
+			
+			if (RootNode.nodeName === "metadata") {
+				TagElement.classList.add("metadata");  //to allow hiding of metadata elements
+			}
+
 			if (indent != 0) {
 				TagElement.style.left = NestingIndent + 'px';
 			}
@@ -213,7 +221,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 				CurrentAttribute = RootNode.attributes.item(i);
 				AddTextNode(TagElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
 				AddTextNode(TagElement, '=', 'Utility');
-				AddTextNode(TagElement, '"' + CurrentAttribute.nodeValue + '"', 'AttributeValue');
+				AddTextNode(TagElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 			}
 			AddTextNode(TagElement, '>', 'Utility');
 			TagElement.appendChild(document.createElement('br'));
