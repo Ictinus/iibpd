@@ -128,6 +128,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	
 	if (RootNode.nodeName === "metadata") {
 		TagEmptyElement.classList.add("metadata"); //to allow hiding of metadata elements
+		TagEmptyElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
 	}
 	
 	if (indent != 0) {
@@ -143,7 +144,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			AddTextNode(TagEmptyElement, '=', 'Utility');
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
-		AddTextNode(TagEmptyElement, ' />');
+		AddTextNode(TagEmptyElement, ' />', 'Utility');
 		xmlHolderElement.appendChild(TagEmptyElement);
 		
 	} else { // mo child nodes
@@ -184,9 +185,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 
 //		if ( !!RootNode.nodeValue ) { NodeContent = RootNode.nodeValue; console.log(NodeContent); } //needed?
 		if (bSimpleContentExists) { //display inline simple content
-			var ContentElement = document.createElement('span');
-			AddTextNode(ContentElement, NodeContent, 'NodeValue');
-			TagEmptyElement.appendChild(ContentElement);
+			AddTextNode(TagEmptyElement, NodeContent, 'NodeValue');
 		}
 
 		AddTextNode(TagEmptyElement, '</', 'Utility'); //put simple values in here
@@ -194,8 +193,14 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		AddTextNode(TagEmptyElement, RootNode.nodeName, 'NodeName');
 		AddTextNode(TagEmptyElement, '>', 'Utility');
 		xmlHolderElement.appendChild(TagEmptyElement);
-		SetVisibility(TagEmptyElement, true);  // collapsed by default
- 
+
+		//AutoExpandDepth, expand until we shouldn't
+		if (indent < iibpd.options.autoOpenDepth) {
+			SetVisibility(TagEmptyElement, false);  // show as expanded
+		} else {
+			SetVisibility(TagEmptyElement, true);  // show as collapsed			
+		}
+		
 		//---------------------------------------------- 
 		if (!bSimpleContentExists) {
 			// build uncollapsed display elements
@@ -204,6 +209,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			
 			if (RootNode.nodeName === "metadata") {
 				TagElement.classList.add("metadata");  //to allow hiding of metadata elements
+				TagElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
 			}
 
 			if (indent != 0) {
@@ -237,7 +243,13 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			AddTextNode(TagElement, RootNode.nodeName, 'NodeName');
 			AddTextNode(TagElement, '>', 'Utility');
 			xmlHolderElement.appendChild(TagElement);
-			SetVisibility(TagElement, false);  // collapsed by default
+
+			//AutoExpandDepth, expand until we shouldn't
+			if (indent < iibpd.options.autoOpenDepth) {
+				SetVisibility(TagElement, true);  // show as expanded
+			} else {
+				SetVisibility(TagElement, false);  // show as collapsed	
+			}
 		}
 	}
 
