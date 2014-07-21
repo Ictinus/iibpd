@@ -10,8 +10,8 @@
 								  "encoder.js",
 								  "loadxml.js"	 ],
 		"matches":        		[ "file://*/*",
-								  "http://*/teamworks/debug.lsw*",
-								  "https://*/teamworks/debug.lsw*"
+								  "http://*/teamworks/*",
+								  "https://*/teamworks/*"
 								],
 		"run_at": "document_end"
 	} ],
