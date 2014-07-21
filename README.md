@@ -1,7 +1,7 @@
 iibpd
 =====
 
-Chrome plugin that adds some improvements to the IBM BPM Process Debugger.   Available in the [Chrome store] [https://chrome.google.com/webstore/detail/improved-ibm-bpm-process/dkhngaclcppplmegjgdjdfinjkklalfe]
+Chrome plugin that adds some improvements to the IBM BPM Process Debugger.   Available in the [Chrome store](https://chrome.google.com/webstore/detail/improved-ibm-bpm-process/dkhngaclcppplmegjgdjdfinjkklalfe)
 
 Improves the process debugger by displaying XML data objects colourised and collapsible.
 
@@ -15,7 +15,7 @@ Optionally removes metadata.
 Installing Extension 
 --------------------
 
-* Just click install in the [Chrome store] [https://chrome.google.com/webstore/detail/improved-ibm-bpm-process/dkhngaclcppplmegjgdjdfinjkklalfe]
+* Just click install in the [Chrome store](https://chrome.google.com/webstore/detail/improved-ibm-bpm-process/dkhngaclcppplmegjgdjdfinjkklalfe)
 
 
 Installing Extension Locally
