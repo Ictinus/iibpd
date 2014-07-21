@@ -32,7 +32,8 @@
           "default_popup": "options.html"
         },
 	"options_page": "options.html",
-	"description":  "Improves the process debugger by displaying XML data objects colourised and collapsible. Provides hotkeys for 'Step Over' (SHIFT-S), 'Step' (S, Enter, or Right Arrow), and 'Run' (R). Based on Lev Muchnik's LoadXML, and using Robert Reid's htmlEncode.",
+	"description":  "Improves the process debugger by displaying XML data objects colourised and collapsible.",
 	"name":         "Improved IBM BPM Process Debugger",
-	"version":      "1.2.1"
+	"short_name":	"iibpd",
+	"version":      "1.2.2"
 }
