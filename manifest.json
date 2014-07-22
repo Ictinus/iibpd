@@ -7,7 +7,6 @@
 		"css": 			  		[ "loadxml.css"
 								],
 		"js":             		[ "embeddedXMLViewer.js",
-								  "encoder.js",
 								  "loadxml.js"	 ],
 		"matches":        		[ "file://*/*",
 								  "http://*/teamworks/*",

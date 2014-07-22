@@ -127,6 +127,9 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	TagEmptyElement.className = 'Element';
 	
 	if (RootNode.nodeName === "metadata") {
+		if (iibpd.options.discardMetadata) {
+			return false; //ignore metadata elements
+		}
 		TagEmptyElement.classList.add("metadata"); //to allow hiding of metadata elements
 		TagEmptyElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
 	}
@@ -208,6 +211,9 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			TagElement.className = 'Element';
 			
 			if (RootNode.nodeName === "metadata") {
+				if (iibpd.options.discardMetadata) {
+					return false; //ignore metadata elements
+				}
 				TagElement.classList.add("metadata");  //to allow hiding of metadata elements
 				TagElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
 			}
