@@ -206,7 +206,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		xmlHolderElement.appendChild(TagEmptyElement);
 
 		//AutoExpandDepth, expand until we shouldn't
-		TagEmptyElement.style.display = (indent < iibpd.options.autoOpenDepth) ? 'none': 'block';
+		TagEmptyElement.style.display = (indent < iibpd.options.autoOpenDepth && !bSimpleContentExists) ? 'none': 'block';
 		
 		//---------------------------------------------- 
 		if (!bSimpleContentExists) {
