@@ -12,6 +12,24 @@
  * for use in IBM BPM Debug pages. 
  */
 
+var emptyDiv = document.createElement('div');
+	emptyDiv.className = 'Element';
+var emptySpan = document.createElement('span');
+var emptyBreak = document.createElement('br');
+var equalsSpan = emptySpan.cloneNode(false);
+	equalsSpan.textContent = "=";
+	equalsSpan.className = "Utility";
+var openTag = equalsSpan.cloneNode(false);
+	openTag.textContent = "<";
+var openEndTag = equalsSpan.cloneNode(false);
+	openEndTag.textContent = "</";
+var endTag = equalsSpan.cloneNode(false);
+	endTag.textContent = ">";
+var endEmptyTag = equalsSpan.cloneNode(false);
+	endEmptyTag.textContent = " />";
+var nodeName = emptySpan.cloneNode(false);
+	nodeName.className = "NodeName";
+	
 function LoadXML(ParentElementID, URL) {
 	var xmlHolderElement = GetParentElement(ParentElementID);
 	if (xmlHolderElement == null) {
@@ -26,13 +44,13 @@ function LoadXMLDom(ParentElementID, xmlDoc) {
 		if (xmlHolderElement == null) {
 			return false;
 		}
-		while (xmlHolderElement.childNodes.length) {
-			xmlHolderElement.removeChild(xmlHolderElement.childNodes.item(xmlHolderElement.childNodes.length - 1));
-		}
-		var Result = ShowXML(xmlHolderElement, xmlDoc.documentElement, 0);
 
-		var ReferenceElement = document.createElement('div');
-		return Result;
+		xmlHolderElement.innerHTML = '';
+		
+		ShowXML(xmlHolderElement, xmlDoc.documentElement, 0);
+
+		//var ReferenceElement = document.createElement('div');
+		return true;
 	} else {
 		return false;
 	}
@@ -42,7 +60,8 @@ function LoadXMLString(ParentElementID, XMLString) {
 	if ( !! xmlDoc && !!xmlDoc.body && !!xmlDoc.body.childNodes && !!xmlDoc.body.childNodes[0] && xmlDoc.body.childNodes[0].nodeName === "parsererror") {
 		return false;
 	} else {
-		return LoadXMLDom(ParentElementID, xmlDoc);
+		LoadXMLDom(ParentElementID, xmlDoc);
+		return true;
 	}
 }
 ////////////////////////////////////////////////////////////
@@ -77,21 +96,9 @@ function URLReceiveCallback(httpRequest, xmlHolderElement) {
 function RequestURL(url, callback, ExtraData) {
 	// based on: http://developer.mozilla.org/en/docs/AJAX:Getting_Started
 	var httpRequest;
-	if (window.XMLHttpRequest) {
-		// Mozilla, Safari, ...
-		httpRequest = new XMLHttpRequest();
-		if (httpRequest.overrideMimeType) {
-			httpRequest.overrideMimeType('text/xml');
-		}
-	} else if (window.ActiveXObject) {
-		// IE
-		try {
-			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch(e) {
-			try {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			} catch(e) {}
-		}
+	httpRequest = new XMLHttpRequest();
+	if (httpRequest.overrideMimeType) {
+		httpRequest.overrideMimeType('text/xml');
 	}
 	if (!httpRequest) {
 		return false;
@@ -104,11 +111,7 @@ function RequestURL(url, callback, ExtraData) {
 	return true;
 }
 function CreateXMLDOM(XMLStr) {
-	if (window.ActiveXObject) {
-		xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.loadXML(XMLStr);
-		return xmlDoc;
-	} else if (document.implementation && document.implementation.createDocument) {
+	if (document.implementation && document.implementation.createDocument) {
 		var parser = new DOMParser();
 		return parser.parseFromString(XMLStr, "text/xml");
 	} else {
@@ -123,8 +126,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		return false;
 	}
 	var Result = true;
-	var TagEmptyElement = document.createElement('div');
-	TagEmptyElement.className = 'Element';
+	var TagEmptyElement = emptyDiv.cloneNode(false); // div.Element
 	
 	if (RootNode.nodeName === "metadata") {
 		if (iibpd.options.discardMetadata) {
@@ -137,17 +139,20 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	if (indent != 0) {
 		TagEmptyElement.style.left = NestingIndent + 'px';
 	}
-	if (RootNode.childNodes.length == 0) {
+	if (RootNode.childNodes.length === 0) {
 		var ClickableElement = AddTextNode(TagEmptyElement, ' ', 'Clickable'); //no action on this Clickable
-		AddTextNode(TagEmptyElement, '<', 'Utility');
-		AddTextNode(TagEmptyElement, RootNode.nodeName, 'NodeName')
-		for (var i = 0; RootNode.attributes && i < RootNode.attributes.length;++i) {
+
+		TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		AddNodeName(TagEmptyElement, RootNode.nodeName);
+		for (var i = 0, attLen = RootNode.attributes.length; i < attLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
-			AddTextNode(TagEmptyElement, '=', 'Utility');
+			TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
-		AddTextNode(TagEmptyElement, ' />', 'Utility');
+		
+		TagEmptyElement.appendChild(endEmptyTag.cloneNode(true)); //add ' />'
+		
 		xmlHolderElement.appendChild(TagEmptyElement);
 		
 	} else { // mo child nodes
@@ -156,7 +161,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		
 		//Look for text content and display in single line 
 		var NodeContent = null;
-		for (var i = 0; RootNode.childNodes && i < RootNode.childNodes.length; ++i) {
+		for (var i = 0, childNodesLen=RootNode.childNodes.length; i < childNodesLen; ++i) {
 			if (RootNode.childNodes.item(i).nodeName === '#text') {
 				NodeContent = RootNode.childNodes.item(i).nodeValue;
 			}
@@ -175,40 +180,38 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			ClickableElement.id = 'div_empty_' + IDCounter;
 		}
 		// element 
-		AddTextNode(TagEmptyElement, '<', 'Utility');
-		AddTextNode(TagEmptyElement, RootNode.nodeName, 'NodeName')
+		TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		AddNodeName(TagEmptyElement, RootNode.nodeName);
 		// element attributes
-		for (var i = 0; RootNode.attributes && i < RootNode.attributes.length;++i) {
+		for (var i = 0, attrLen = RootNode.attributes.length; i < attrLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
-			AddTextNode(TagEmptyElement, '=', 'Utility');
+
+			TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
+
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
-		AddTextNode(TagEmptyElement, '>', 'Utility');
 
-//		if ( !!RootNode.nodeValue ) { NodeContent = RootNode.nodeValue; console.log(NodeContent); } //needed?
+		TagEmptyElement.appendChild(endTag.cloneNode(true)); //add '>'
+		
 		if (bSimpleContentExists) { //display inline simple content
 			AddTextNode(TagEmptyElement, NodeContent, 'NodeValue');
 		}
 
-		AddTextNode(TagEmptyElement, '</', 'Utility'); //put simple values in here
+		TagEmptyElement.appendChild(openEndTag.cloneNode(true)); //add '</'
+		AddNodeName(TagEmptyElement, RootNode.nodeName);
 
-		AddTextNode(TagEmptyElement, RootNode.nodeName, 'NodeName');
-		AddTextNode(TagEmptyElement, '>', 'Utility');
+		TagEmptyElement.appendChild(endTag.cloneNode(true)); //add '>'
+
 		xmlHolderElement.appendChild(TagEmptyElement);
 
 		//AutoExpandDepth, expand until we shouldn't
-		if (indent < iibpd.options.autoOpenDepth) {
-			SetVisibility(TagEmptyElement, false);  // show as expanded
-		} else {
-			SetVisibility(TagEmptyElement, true);  // show as collapsed			
-		}
+		TagEmptyElement.style.display = (indent < iibpd.options.autoOpenDepth) ? 'none': 'block';
 		
 		//---------------------------------------------- 
 		if (!bSimpleContentExists) {
 			// build uncollapsed display elements
-			var TagElement = document.createElement('div');
-			TagElement.className = 'Element';
+			var TagElement =  emptyDiv.cloneNode(false); // div.Element
 			
 			if (RootNode.nodeName === "metadata") {
 				if (iibpd.options.discardMetadata) {
@@ -226,88 +229,70 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 				ToggleElementVisibility(this, e.ctrlKey);
 			}
 			ClickableElement.id = 'div_content_' + IDCounter; ++IDCounter;
-			AddTextNode(TagElement, '<', 'Utility');
-			AddTextNode(TagElement, RootNode.nodeName, 'NodeName');
 
-			for (var i = 0; RootNode.attributes && i < RootNode.attributes.length;++i) {
+			TagElement.appendChild(openTag.cloneNode(true)); // add '<' 
+			AddNodeName(TagElement, RootNode.nodeName);
+
+			for (var i = 0, attrLen = RootNode.attributes.length; i < attrLen; ++i) {
 				CurrentAttribute = RootNode.attributes.item(i);
 				AddTextNode(TagElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
-				AddTextNode(TagElement, '=', 'Utility');
+				TagElement.appendChild(equalsSpan.cloneNode(true)); //add '='
 				AddTextNode(TagElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 			}
-			AddTextNode(TagElement, '>', 'Utility');
-			TagElement.appendChild(document.createElement('br'));
+
+			TagElement.appendChild(endTag.cloneNode(true)); //add '>'
+
+			TagElement.appendChild(emptyBreak.cloneNode(false)); // add 'br'
 			var NodeContent = null;
-			for (var i = 0; RootNode.childNodes && i < RootNode.childNodes.length; ++i) {
+			for (var i = 0, childNodesLen = RootNode.childNodes.length; i < childNodesLen; ++i) {
 				if (RootNode.childNodes.item(i).nodeName != '#text') {
-					Result &= ShowXML(TagElement, RootNode.childNodes.item(i), indent + 1);
+					ShowXML(TagElement, RootNode.childNodes.item(i), indent + 1);
 				}
 			}
 
 			AddTextNode(TagElement, ' ', 'Clickable');
-			AddTextNode(TagElement, '</', 'Utility');
-			AddTextNode(TagElement, RootNode.nodeName, 'NodeName');
-			AddTextNode(TagElement, '>', 'Utility');
+
+			TagElement.appendChild(openEndTag.cloneNode(true)); //add '</'
+			AddNodeName(TagElement, RootNode.nodeName);
+			TagElement.appendChild(endTag.cloneNode(true)); //add '>'
+
 			xmlHolderElement.appendChild(TagElement);
 
 			//AutoExpandDepth, expand until we shouldn't
-			if (indent < iibpd.options.autoOpenDepth) {
-				SetVisibility(TagElement, true);  // show as expanded
-			} else {
-				SetVisibility(TagElement, false);  // show as collapsed	
-			}
+			TagElement.style.display = (indent < iibpd.options.autoOpenDepth) ? 'block': 'none';
 		}
 	}
 
-	return Result;
+	return true;
+}
+function AddNodeName(ParentNode, Text) {
+	NewNode = nodeName.cloneNode(false);
+	NewNode.textContent = Text || '';
+
+	if (!!ParentNode) {
+		ParentNode.appendChild(NewNode);
+	}
+	return NewNode;	
 }
 function AddTextNode(ParentNode, Text, Class) {
-	NewNode = document.createElement('span');
+	NewNode = emptySpan.cloneNode(false);
 	if (Class) {
 		NewNode.className = Class;
 	}
 	if (Text) {
-		NewNode.appendChild(document.createTextNode(Text));
+		NewNode.textContent = Text;
 	}
 	if (ParentNode) {
 		ParentNode.appendChild(NewNode);
 	}
 	return NewNode;
 }
-function CompatibleGetElementByID(id) {
-	if (!id) {
-		return null;
-	}
-	if (document.getElementById) {
-		// DOM3 = IE5, NS6
-		return document.getElementById(id);
-	} else {
-		if (document.layers) {
-			// Netscape 4
-			return document.id;
-		} else {
-			// IE 4
-			return document.all.id;
-		}
-	}
-}
+
 function SetVisibility(HTMLElement, Visible) {
 	if (!HTMLElement) {
 		return;
 	}
-	var VisibilityStr = (Visible) ? 'block': 'none';
-	if (document.getElementById) {
-		// DOM3 = IE5, NS6
-		HTMLElement.style.display = VisibilityStr;
-	} else {
-		if (document.layers) {
-			// Netscape 4
-			HTMLElement.display = VisibilityStr;
-		} else {
-			// IE 4
-			HTMLElement.id.style.display = VisibilityStr;
-		}
-	}
+	HTMLElement.style.display = (Visible) ? 'block': 'none';
 }
 function ToggleElementVisibility(Element, bCTRLKey) {
 	if (bCTRLKey) {
@@ -332,8 +317,8 @@ function ToggleElementVisibility(Element, bCTRLKey) {
 		ElementToShow = 'div_content_' + ElementID;
 		ElementToHide = 'div_empty_' + ElementID;
 	}
-	ElementToHide = CompatibleGetElementByID(ElementToHide);
-	ElementToShow = CompatibleGetElementByID(ElementToShow);
+	ElementToHide = document.getElementById(ElementToHide);
+	ElementToShow = document.getElementById(ElementToShow);
 	if (ElementToHide) {
 		ElementToHide = ElementToHide.parentNode;
 	}
