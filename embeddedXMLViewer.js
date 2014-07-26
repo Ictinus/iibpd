@@ -67,8 +67,6 @@ var iibpd = {
                 element = arrEl[i];
                 LoadXMLString(element, element.textContent);
             }
-
-            //iibpd.processConfigOptions();
         });
     },
     
