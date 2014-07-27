@@ -1,5 +1,10 @@
 var iibpd = {
     debug: false,
+    options: {
+        discardMetadata: true,
+        hide_metadata: true,
+        autoOpenDepth: 1
+    },
     
     simulateClick: function (elem) {
         var evt = document.createEvent("MouseEvents");
@@ -50,22 +55,25 @@ var iibpd = {
     
     loadOptions: function () {
         chrome.storage.sync.get({
-            hide_metadata: true
+            discardMetadata: true,
+            hide_metadata: true,
+            autoOpenDepth: 1
         }, function (items) {
-            iibpd.hide_metadata = items.hide_metadata;
-            iibpd.processConfigOptions();
+            iibpd.options.discardMetadata = items.discardMetadata;
+            iibpd.options.hide_metadata = items.hide_metadata;
+            iibpd.options.autoOpenDepth = items.autoOpenDepth;
+            var element, arrEl = document.getElementsByTagName('pre');
+            for (var i=0; i < arrEl.length; i++) {
+                element = arrEl[i];
+                LoadXMLString(element, element.textContent);
+            }
         });
     },
     
     init: function () {
-        var element, arrEl = document.getElementsByTagName('pre');
-        for (var i=0; i < arrEl.length; i++) {
-            element = arrEl[i];
-            LoadXMLString(element, Encoder.htmlDecode(element.innerHTML));
-        }
-        document.addEventListener("keydown", iibpd.processKey, true);
         iibpd.loadOptions();
 
+        document.addEventListener("keydown", iibpd.processKey, true);
         chrome.storage.onChanged.addListener(function (changes, namespace) {
             for (key in changes) {
                 var storageChange = changes[key];
@@ -78,8 +86,14 @@ var iibpd = {
                         storageChange.newValue);
                 }
                 if (key === "hide_metadata") {
-                    iibpd.hide_metadata = storageChange.newValue;
+                    iibpd.options.hide_metadata = storageChange.newValue;
                     iibpd.processConfigOptions();
+                }
+                if (key === "autoOpenDepth") {
+                    iibpd.options.autoOpenDepth = storageChange.newValue;
+                }
+                if (key === "discardMetadata") {
+                    iibpd.options.discardMetadata = storageChange.newValue;
                 }
             }
         });
@@ -90,7 +104,7 @@ var iibpd = {
         var arrMetadata = document.querySelectorAll("div.metadata");
         for (var i=0; i < arrMetadata.length; i++) {
             if (!!arrMetadata[i]) {
-                arrMetadata[i].classList.toggle("hide_metadata", iibpd.hide_metadata);
+                arrMetadata[i].classList.toggle("hide_metadata", iibpd.options.hide_metadata);
             }
         }
     },
