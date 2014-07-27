@@ -30,7 +30,7 @@ ul {
 }
 .fade {
    opacity: 0;
-   transition: opacity .25s ease-in-out;
+   transition: opacity .5s ease-in-out;
 }
 .italicised {
     font-style: italic;

@@ -4,7 +4,6 @@ var iibpdOptions = {
     },
     
     toggleDisabled: function (element, bDisabled) {
-        console.log('toggleDisabled is ' + bDisabled);
         if (bDisabled) {
             element.setAttribute("disabled", "disabled");
         } else {
@@ -27,7 +26,7 @@ var iibpdOptions = {
             status.textContent = ' Options saved.';
             setTimeout(function() {
                 status.classList.add('fade');
-                status.textContent = '';
+                //setTimeout(function () { status.textContent = ''; }, 500);
             }, 1000);
         });
     },
