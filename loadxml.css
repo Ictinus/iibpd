@@ -39,7 +39,7 @@ pre {
     /*max-height: set by javascript*/
     overflow: hidden;
     /*opacity: 1;*/
-    transition: max-height 0.25s ease-in-out;/*, opacity .5s ease-in;*/
+    transition: max-height 0.4s ease-in-out;/*, opacity .5s ease-in;*/
 }
 .Element > .Element {
     left:15px;
@@ -47,7 +47,7 @@ pre {
 .Element_hide, .hide_metadata {
     max-height: 0 !important;
     /*opacity: 0;*/
-    transition: max-height 0.25s ease-in-out; /*, opacity .5s ease-out;*/
+    transition: max-height 0.4s ease-in-out; /*, opacity .5s ease-out;*/
     overflow: hidden;
 
 }

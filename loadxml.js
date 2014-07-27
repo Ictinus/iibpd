@@ -270,7 +270,7 @@ function SetVisibility(HTMLElement, Visible) {
 			setMaxHeight(HTMLElement, true); //set parent max heights before collapse
 		}
 		 //timeout to ensure max heights are set before execution.
-		setTimeout(function(){HTMLElement.classList.toggle('Element_hide', !Visible);}, 50);
+		setTimeout(function(){HTMLElement.classList.toggle('Element_hide', !Visible);}, 50);  //TODO
 	}
 }
 function clearParentMaxHeight (element) {
@@ -281,13 +281,12 @@ function clearParentMaxHeight (element) {
 }
 function setMaxHeight(element, bIncludeParents) {
 	if (!!element && element.nodeName.toLowerCase() != 'pre') {
-		var LAST_TAG_LEN = 3, PARENT_VPADDING = 0;
+		var LAST_TAG_LEN = 3;
 		arrChildren = element.children;
 		var iChildrenHeight = 0;
-		for (var i=0; i < arrChildren.length - LAST_TAG_LEN; i++) {
+		for (var i=0, len=arrChildren.length - LAST_TAG_LEN; i < len; i++) {
 			iChildrenHeight += arrChildren.item(i).offsetHeight;
 		}
-		iChildrenHeight += PARENT_VPADDING;
 		element.style.maxHeight = iChildrenHeight;
 
 		if (bIncludeParents) {
