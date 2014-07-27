@@ -1,6 +1,7 @@
 var iibpd = {
     debug: false,
     options: {
+        discardMetadata: true,
         hide_metadata: true,
         autoOpenDepth: 1
     },
@@ -54,17 +55,18 @@ var iibpd = {
     
     loadOptions: function () {
         chrome.storage.sync.get({
+            discardMetadata: true,
             hide_metadata: true,
             autoOpenDepth: 1
         }, function (items) {
+            iibpd.options.discardMetadata = items.discardMetadata;
             iibpd.options.hide_metadata = items.hide_metadata;
             iibpd.options.autoOpenDepth = items.autoOpenDepth;
             var element, arrEl = document.getElementsByTagName('pre');
             for (var i=0; i < arrEl.length; i++) {
                 element = arrEl[i];
-                LoadXMLString(element, Encoder.htmlDecode(element.innerHTML));
+                LoadXMLString(element, element.textContent);
             }
-            //iibpd.processConfigOptions();
         });
     },
     
@@ -89,6 +91,9 @@ var iibpd = {
                 }
                 if (key === "autoOpenDepth") {
                     iibpd.options.autoOpenDepth = storageChange.newValue;
+                }
+                if (key === "discardMetadata") {
+                    iibpd.options.discardMetadata = storageChange.newValue;
                 }
             }
         });

@@ -1,11 +1,15 @@
 @charset "utf-8";
 /* CSS Document */
+pre {
+	/* using line-height rather than Element.padding so to ease max-height calculations*/
+	line-height: 1.5em;
+}
 .Utility {
-        color: black;
-}   
+    color: black;
+}
 .NodeName {
     font-weight:bold;
-    color: #800080; 
+    color: #800080;
 }
 .AttributeName {
     font-weight:bold;
@@ -17,14 +21,35 @@
 .NodeValue {
     color: green;
 }
+.endTag {
+   opacity: 1;
+   transition: opacity .50s ease-in-out;
+}
+.fade {
+   opacity: 0;
+   transition: opacity .25s ease-in-out;
+}
 .Element {
     border-left-color:#C2C2C2;
     border-left-width:thin;
     border-left-style:solid;
-    padding-top:0px;
-    /*margin-top:10px;*/
-    margin: 2px 0px;
+    padding: 0px 0px;
     position: relative;
+
+    /*max-height: set by javascript*/
+    overflow: hidden;
+    /*opacity: 1;*/
+    transition: max-height 0.4s ease-in-out;/*, opacity .5s ease-in;*/
+}
+.Element > .Element {
+    left:15px;
+}
+.Element_hide, .hide_metadata {
+    max-height: 0 !important;
+    /*opacity: 0;*/
+    transition: max-height 0.4s ease-in-out; /*, opacity .5s ease-out;*/
+    overflow: hidden;
+
 }
 .Clickable {    
     font-weight:900;
@@ -35,15 +60,4 @@
     padding-right:5px;
     vertical-align:middle;
     user-select: none;
-}
-
-.metadata { 
-    max-height: 1000px;
-    overflow: hidden;
-    transition: max-height 0.8s ease-in;
-}
-.hide_metadata {
-    max-height: 0;
-    transition: max-height 0.8s ease-out;
-    overflow: hidden;
 }
