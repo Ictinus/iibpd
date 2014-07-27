@@ -6,12 +6,15 @@ var iibpdOptions = {
     toggleDisabled: function (element, bDisabled) {
         console.log('toggleDisabled is ' + bDisabled);
         if (bDisabled) {
-            element.setAttribute("disabled", "true");
+            element.setAttribute("disabled", "disabled");
         } else {
             element.removeAttribute("disabled");
         }
     },
-    
+    toggleHideMetadata: function () {
+		var bDiscardMetadata = document.getElementById("discardMetadata").checked;
+		iibpdOptions.toggleDisabled(document.getElementById("hide_metadata"), bDiscardMetadata);
+	},
     saveOptions: function () {
         chrome.storage.sync.set({
             'discardMetadata': !!document.getElementById('discardMetadata').checked,
@@ -39,6 +42,7 @@ var iibpdOptions = {
             document.getElementById('hide_metadata').checked = (items.hide_metadata)? 'checked': '';
             document.getElementById('autoOpenDepth').value = items.autoOpenDepth;
             document.getElementById('autoOpenDepthDisplay').textContent = items.autoOpenDepth;
+			iibpdOptions.toggleDisabled(document.getElementById("hide_metadata"), items.discardMetadata);
         });
     }
 };
@@ -48,5 +52,6 @@ document.addEventListener("readystatechange", function () {
         iibpdOptions.loadOptions();
         document.getElementById("save").addEventListener('click', iibpdOptions.saveOptions);
         document.getElementById("autoOpenDepth").addEventListener('input', iibpdOptions.updateAutoOpenDepthDisplay);
+        document.getElementById("discardMetadata").addEventListener('click', iibpdOptions.toggleHideMetadata);
     }
 }, true);
