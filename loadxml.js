@@ -135,13 +135,13 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	if (RootNode.childNodes.length === 0) {
 		var ClickableElement = AddTextNode(TagEmptyElement, ' ', 'Clickable'); //no action on this Clickable
 
-		TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
 		AddNodeName(TagEmptyElement, RootNode.nodeName);
 		
 		for (var i = 0, attLen = RootNode.attributes.length; i < attLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
-			TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
+			//TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
 		TagEmptyElement.appendChild(endEmptyTag.cloneNode(true)); //add ' />'
@@ -175,14 +175,14 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			ClickableElement.id = 'div_empty_' + IDCounter;
 		}
 		// element 
-		TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
 		AddNodeName(TagEmptyElement, RootNode.nodeName);
 		// element attributes
 		for (var i = 0, attrLen = RootNode.attributes.length; i < attrLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
 
-			TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
+			//TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
 
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
@@ -197,12 +197,12 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		var endOfElement = openEndTag.cloneNode(true);
 		endOfElement.classList.add('endTag');
 		if (indent < iibpd.options.autoOpenDepth) { endOfElement.classList.add('fade'); }
-		TagEmptyElement.appendChild(endOfElement); //add '</'		
+		//TagEmptyElement.appendChild(endOfElement); //add '</'		
 		AddNodeName(TagEmptyElement, RootNode.nodeName, true, indent < iibpd.options.autoOpenDepth); // true = mark as endTag, true=fade
 		endOfElement = endTag.cloneNode(true);
 		endOfElement.classList.add('endTag');
 		if (indent < iibpd.options.autoOpenDepth) { endOfElement.classList.add('fade'); }
-		TagEmptyElement.appendChild(endOfElement); //add '>'
+		//TagEmptyElement.appendChild(endOfElement); //add '>'
 
 		xmlHolderElement.appendChild(TagEmptyElement);
 
@@ -226,9 +226,9 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			// end the expanded xml object
 			AddTextNode(TagElement, ' ', 'Clickable');
 
-			TagElement.appendChild(openEndTag.cloneNode(true)); //add '</'
-			AddNodeName(TagElement, RootNode.nodeName);
-			TagElement.appendChild(endTag.cloneNode(true)); //add '>'
+			//TagElement.appendChild(openEndTag.cloneNode(true)); //add '</'
+			AddNodeName(TagElement, RootNode.nodeName, true, false);
+			//TagElement.appendChild(endTag.cloneNode(true)); //add '>'
 
 			xmlHolderElement.appendChild(TagElement);
 
@@ -281,7 +281,7 @@ function clearParentMaxHeight (element) {
 }
 function setMaxHeight(element, bIncludeParents) {
 	if (!!element && element.nodeName.toLowerCase() != 'pre') {
-		var LAST_TAG_LEN = 3;
+		var LAST_TAG_LEN = 0;
 		arrChildren = element.children;
 		var iChildrenHeight = 0;
 		for (var i=0, len=arrChildren.length - LAST_TAG_LEN; i < len; i++) {

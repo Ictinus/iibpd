@@ -11,10 +11,27 @@ pre {
     font-weight:bold;
     color: #800080;
 }
+.NodeName:not(.endTag):before {
+	content:"<";
+	color: #000;
+}
+.NodeName.endTag:before {
+	content:"</";
+	color: #000;
+}
+.NodeName.endTag:after {
+	content:">";
+	color: #000;
+}
+
 .AttributeName {
     font-weight:bold;
     color: black;
 }
+.AttributeName:after {
+	content:"=";
+}
+
 .AttributeValue {
     color:blue;
 }
@@ -60,4 +77,8 @@ pre {
     padding-right:5px;
     vertical-align:middle;
     user-select: none;
+}
+
+#content {
+	margin: 5px 0px;
 }
