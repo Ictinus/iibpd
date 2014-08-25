@@ -19,10 +19,10 @@
 		"persistent": 			false
 	},
 	"web_accessible_resources": [
-								  
+
 								],
 	"permissions": 				[
-								  "storage"
+								  "storage", "activeTab"
 								],
 	"icons": { "16": "bug_iibpd_16.png", "32": "bug_iibpd_32.png", "48": "bug_iibpd_48.png", "128": "bug_iibpd_128.png" },
 	"browser_action": {

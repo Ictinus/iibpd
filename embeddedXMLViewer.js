@@ -1,11 +1,12 @@
 var iibpd = {
     debug: false,
     options: {
+        enableIIBPD: true,
         discardMetadata: true,
         hide_metadata: true,
         autoOpenDepth: 1
     },
-    
+
     simulateClick: function (elem) {
         var evt = document.createEvent("MouseEvents");
         evt.initMouseEvent(
@@ -27,7 +28,7 @@ var iibpd = {
         );
         elem.dispatchEvent(evt);
     },
-    
+
     processKey: function (e) { //e is event object passed from function invocation
         var kc, btnStep, btnRun; //sk
         e = e || window.event || "";
@@ -52,24 +53,50 @@ var iibpd = {
             }
         }
     },
-    
+
     loadOptions: function () {
         chrome.storage.sync.get({
+			enableIIBPD: true,
             discardMetadata: true,
             hide_metadata: true,
-            autoOpenDepth: 1
+            autoOpenDepth: 1,
+            colourTagEnds: '#000000',
+            colourTagName: '#800080',
+            colourAttrName: '#000000',
+            colourAttrValue: '#0000FF',
+            colourData: '#008000'
         }, function (items) {
+            iibpd.options.enableIIBPD = items.enableIIBPD;
             iibpd.options.discardMetadata = items.discardMetadata;
             iibpd.options.hide_metadata = items.hide_metadata;
             iibpd.options.autoOpenDepth = items.autoOpenDepth;
-            var element, arrEl = document.getElementsByTagName('pre');
-            for (var i=0; i < arrEl.length; i++) {
-                element = arrEl[i];
-                LoadXMLString(element, element.textContent);
+            iibpd.options.colourTagEnds = items.colourTagEnds;
+            iibpd.options.colourTagName = items.colourTagName;
+            iibpd.options.colourAttrName = items.colourAttrName;
+            iibpd.options.colourAttrValue = items.colourAttrValue;
+            iibpd.options.colourData = items.colourData;
+
+            if (iibpd.options.enableIIBPD) {
+                var element, arrEl = document.getElementsByTagName('pre');
+                for (var i=0; i < arrEl.length; i++) {
+                    element = arrEl[i];
+                    LoadXMLString(element, element.textContent);
+                }
             }
+
+            //load colour styles
+            var styleEl = document.createElement('style'),
+            styleSheet;
+            document.head.appendChild(styleEl);
+            styleSheet = styleEl.sheet;
+            styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + "}", 0);
+            styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + "}", 0);
+            styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + "}", 0);
+            styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + "}", 0);
+            styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:nth-last-child(3):after, .AttributeValue:nth-last-child(2):after, .AttributeValue:last-child:after {color:"+ iibpd.options.colourTagEnds +"}", 0);
         });
     },
-    
+
     init: function () {
         iibpd.loadOptions();
 
@@ -98,7 +125,7 @@ var iibpd = {
             }
         });
     },
-    
+
     processConfigOptions: function () {
         //hide/show metadata
         var arrMetadata = document.querySelectorAll("div.metadata");
@@ -107,8 +134,10 @@ var iibpd = {
                 arrMetadata[i].classList.toggle("hide_metadata", iibpd.options.hide_metadata);
             }
         }
+
+
     },
-    
+
     load: function () {
         document.addEventListener("readystatechange", function () {
             if (document.readyState === "complete") {

@@ -19,7 +19,7 @@ pre {
 	content:"</";
 	color: #000;
 }
-.NodeName.endTag:after {
+.NodeName.endTag:after, .AttributeValue:nth-last-child(2):after, .AttributeValue:nth-last-child(3):after {
 	content:">";
 	color: #000;
 }
@@ -34,6 +34,10 @@ pre {
 
 .AttributeValue {
     color:blue;
+}
+.AttributeValue:last-child:after {
+	content: " />";
+	color: #000;
 }
 .NodeValue {
     color: green;
@@ -68,10 +72,10 @@ pre {
     overflow: hidden;
 
 }
-.Clickable {    
+.Clickable {
     font-weight:900;
     font-size:large;
-    color: #800080; 
+    color: #800080;
     cursor:pointer;
     padding-left: 5px;
     padding-right:5px;

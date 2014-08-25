@@ -9,7 +9,7 @@
  */
 
 /* Modified by Paul Blackman, July 2014,
- * for use in IBM BPM Debug pages. 
+ * for use in IBM BPM Debug pages.
  */
 
 var emptyDiv = document.createElement('div');
@@ -29,7 +29,7 @@ var endEmptyTag = equalsSpan.cloneNode(false);
 	endEmptyTag.textContent = " />";
 var nodeName = emptySpan.cloneNode(false);
 	nodeName.className = "NodeName";
-	
+
 function LoadXML(ParentElementID, URL) {
 	var xmlHolderElement = GetParentElement(ParentElementID);
 	if (xmlHolderElement == null) {
@@ -46,7 +46,7 @@ function LoadXMLDom(ParentElementID, xmlDoc) {
 		}
 
 		xmlHolderElement.innerHTML = '';
-		
+
 		ShowXML(xmlHolderElement, xmlDoc.documentElement, 0);
 
 		return true;
@@ -126,7 +126,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	}
 	var Result = true;
 	var TagEmptyElement = emptyDiv.cloneNode(false); // div.Element
-	
+
 	if (RootNode.nodeName === "metadata") {
 		TagEmptyElement.classList.add("metadata"); //to allow hiding of metadata elements
 		TagEmptyElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
@@ -135,22 +135,22 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	if (RootNode.childNodes.length === 0) {
 		var ClickableElement = AddTextNode(TagEmptyElement, ' ', 'Clickable'); //no action on this Clickable
 
-		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<'
 		AddNodeName(TagEmptyElement, RootNode.nodeName);
-		
+
 		for (var i = 0, attLen = RootNode.attributes.length; i < attLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
 			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
 			//TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
-		TagEmptyElement.appendChild(endEmptyTag.cloneNode(true)); //add ' />'
+		//TagEmptyElement.appendChild(endEmptyTag.cloneNode(true)); //add ' />'
 		xmlHolderElement.appendChild(TagEmptyElement);
-		
+
 	} else { // mo child nodes
 
 		// build collapsed display elements
-		//Look for text content and display in single line 
+		//Look for text content and display in single line
 		var NodeContent = null;
 		for (var i = 0, childNodesLen=RootNode.childNodes.length; i < childNodesLen; ++i) {
 			if (RootNode.childNodes.item(i).nodeName === '#text') {
@@ -167,15 +167,15 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			if (indent < iibpd.options.autoOpenDepth) {
 				ClickableElement = AddTextNode(TagEmptyElement, '-', 'Clickable');
 			} else {
-				ClickableElement = AddTextNode(TagEmptyElement, '+', 'Clickable');				
+				ClickableElement = AddTextNode(TagEmptyElement, '+', 'Clickable');
 			}
 			ClickableElement.onclick = function(e) {
 				ToggleElementVisibility(this, e.ctrlKey);
 			}
 			ClickableElement.id = 'div_empty_' + IDCounter;
 		}
-		// element 
-		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<' 
+		// element
+		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<'
 		AddNodeName(TagEmptyElement, RootNode.nodeName);
 		// element attributes
 		for (var i = 0, attrLen = RootNode.attributes.length; i < attrLen; ++i) {
@@ -187,8 +187,8 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
 		}
 
-		TagEmptyElement.appendChild(endTag.cloneNode(true)); //add '>'
-		
+		//TagEmptyElement.appendChild(endTag.cloneNode(true)); //add '>'
+
 		if (bSimpleContentExists) { //display inline simple content
 			AddTextNode(TagEmptyElement, NodeContent, 'NodeValue');
 		}
@@ -197,7 +197,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		var endOfElement = openEndTag.cloneNode(true);
 		endOfElement.classList.add('endTag');
 		if (indent < iibpd.options.autoOpenDepth) { endOfElement.classList.add('fade'); }
-		//TagEmptyElement.appendChild(endOfElement); //add '</'		
+		//TagEmptyElement.appendChild(endOfElement); //add '</'
 		AddNodeName(TagEmptyElement, RootNode.nodeName, true, indent < iibpd.options.autoOpenDepth); // true = mark as endTag, true=fade
 		endOfElement = endTag.cloneNode(true);
 		endOfElement.classList.add('endTag');
@@ -206,16 +206,16 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 
 		xmlHolderElement.appendChild(TagEmptyElement);
 
-		//---------------------------------------------- 
+		//----------------------------------------------
 		if (!bSimpleContentExists) {
 			// build uncollapsed display elements
 			var TagElement =  emptyDiv.cloneNode(false); // div.Element
-			
+
 			if (RootNode.nodeName === "metadata") {
 				TagElement.classList.add("metadata");  //to allow hiding of metadata elements
 				TagElement.classList.toggle("hide_metadata", iibpd.options.hide_metadata);
 			}
-			
+
 			var NodeContent = null;
 			for (var i = 0, childNodesLen = RootNode.childNodes.length; i < childNodesLen; ++i) {
 				if (RootNode.childNodes.item(i).nodeName != '#text') {
@@ -247,7 +247,7 @@ function AddNodeName(ParentNode, Text, bEndTag, bFade) {
 	if (!!ParentNode) {
 		ParentNode.appendChild(NewNode);
 	}
-	return NewNode;	
+	return NewNode;
 }
 function AddTextNode(ParentNode, Text, Class) {
 	NewNode = emptySpan.cloneNode(false);
@@ -263,7 +263,7 @@ function AddTextNode(ParentNode, Text, Class) {
 
 function SetVisibility(HTMLElement, Visible) {
 	if (!!HTMLElement) {
-		if (Visible) { 
+		if (Visible) {
 			setMaxHeight(HTMLElement, false);
 			clearParentMaxHeight(HTMLElement.parentNode); //clear parent max heights before expand
 		} else {
@@ -311,12 +311,12 @@ function ToggleElementVisibility(Element, bCTRLKey) {
 	var ElementToHide = null;
 	var ElementToShow = null;
 
-	
+
 	var objectHead = Element.parentNode;
 	//show or hide?
 	var ElementToToggle = objectHead.nextSibling;
 	var bExpand = ElementToToggle.classList.contains('Element_hide');
-	
+
 	var arrEndTags_hide;
 	if (!!objectHead) {
 		arrEndTags_hide = objectHead.getElementsByClassName('endTag');
@@ -325,6 +325,6 @@ function ToggleElementVisibility(Element, bCTRLKey) {
 		}
 		objectHead.firstChild.textContent = (bExpand) ? '-' : '+' ;
 	}
-	
+
 	SetVisibility(ElementToToggle, bExpand);
 }

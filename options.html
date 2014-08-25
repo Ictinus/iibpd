@@ -7,11 +7,20 @@ iibpd options</title>
 <body>
 <div class="banner">Improved IBM BPM Process Debugger</div>
 <div id="config" class="content">
+<input type=checkbox id="enableIIBPD"><label for="enableIIBPD">Enable IIBPD</label></input><br>
 <h4>Configuration</h4>
 <input type=checkbox id="discardMetadata"><label for="discardMetadata">Discard Metadata</label></input> - <span class="italicised">fastest!</span><br>
 <input type=checkbox id="hide_metadata"><label for="hide_metadata">Hide Metadata</label></input><br><br>
 Auto open depth:  <span id="autoOpenDepthDisplay">0</span><br>
-<input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input>
+<input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input><br><br>
+<fieldset>
+    <legend>Colours</legend>
+    <input type="color" id="colourTagEnds" value="#000000"> <span class="reset" id="resetColourTagEnds">&#8634;</span> <label for="colourTagEnds">Tag ends</label></input> <br>
+    <input type="color" id="colourTagName" value="#800080"> <span class="reset" id="resetColourTagName">&#8634;</span> <label for="colourTagName">Tag name</label></input><br>
+    <input type="color" id="colourAttrName" value="#000000"> <span class="reset" id="resetColourAttrName">&#8634;</span> <label for="colourAttrName">Attribute name</label></input><br>
+    <input type="color" id="colourAttrValue" value="#0000FF"> <span class="reset" id="resetColourAttrValue">&#8634;</span> <label for="colourAttrValue">Attribute value</label></input><br>
+    <input type="color" id="colourData" value="#008000"> <span class="reset" id="resetColourData">&#8634;</span> <label for="colourData">Data</label></input>
+</fieldset>
 </div>
 <div id="hotkeys" class="content">
 <h4>Action/Hotkeys</h4>
@@ -23,7 +32,7 @@ Auto open depth:  <span id="autoOpenDepthDisplay">0</span><br>
     <h4>With thanks to:</h4>
     <ul>
         <li>Lev Muchnik's <a href="http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html">LoadXML</a></li>
-    </ul> 
+    </ul>
 </div>
 <div>
 <button id="save">Save</button><span id="status"></span>
