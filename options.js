@@ -28,7 +28,9 @@ var iibpdOptions = {
             'colourTagName': document.getElementById("colourTagName").value,
             'colourAttrName': document.getElementById("colourAttrName").value,
             'colourAttrValue': document.getElementById("colourAttrValue").value,
-            'colourData': document.getElementById("colourData").value
+            'colourData': document.getElementById("colourData").value,
+            'colourBackground': document.getElementById("colourBackground").value,
+            'colourForeground': document.getElementById("colourForeground").value
         }, function() {
             // Update status to let user know options were saved.
             var status = document.getElementById('status');
@@ -51,7 +53,9 @@ var iibpdOptions = {
             'colourTagName': '#800080',
             'colourAttrName': '#000000',
             'colourAttrValue': '#0000FF',
-            'colourData': '#008000'
+            'colourData': '#008000',
+            'colourBackground': '#dae3ec',
+            'colourForeground': '#000000',
         }, function(items) {
             document.getElementById('enableIIBPD').checked = (items.enableIIBPD)? 'checked': '';
             document.getElementById('discardMetadata').checked = (items.discardMetadata)? 'checked': '';
@@ -63,6 +67,8 @@ var iibpdOptions = {
             document.getElementById("colourAttrName").value = items.colourAttrName;
             document.getElementById("colourAttrValue").value = items.colourAttrValue;
             document.getElementById("colourData").value = items.colourData;
+            document.getElementById("colourBackground").value = items.colourBackground;
+            document.getElementById("colourForeground").value = items.colourForeground;
 			iibpdOptions.toggleDisabled(document.getElementById("hide_metadata"), items.discardMetadata);
         });
     }
@@ -91,4 +97,10 @@ document.getElementById("resetColourAttrValue").addEventListener("click", functi
 }, true);
 document.getElementById("resetColourData").addEventListener("click", function () {
     document.getElementById("colourData").value = '#008000';
+}, true);
+document.getElementById("resetColourBackground").addEventListener("click", function () {
+    document.getElementById("colourBackground").value = '#dae3ec';
+}, true);
+document.getElementById("resetColourForeground").addEventListener("click", function () {
+    document.getElementById("colourForeground").value = '#dae3ec';
 }, true);

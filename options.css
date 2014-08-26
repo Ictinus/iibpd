@@ -1,5 +1,5 @@
 body {
-    width: 300px;
+    width: 400px;
 }
 
 h4 {
@@ -39,12 +39,27 @@ ul {
 input[type='color'] {
     margin-top: 4px;
 }
+
+input[type='range'] {
+    margin-left: 0.8em;
+    width: 90%;
+}
+
 fieldset {
     border-color: #CEE3F8;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
+    margin: 4px 0px;
 }
+fieldset div {
+    -webkit-column-count: 2;
+}
+.colourPicker { display: inline-block; }
+
 span.reset {
     cursor: pointer;
     user-select: none;
+}
+span#autoOpenDepthDisplay {
+    font-size: 2em;
 }

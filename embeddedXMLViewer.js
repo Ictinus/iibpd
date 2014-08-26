@@ -64,7 +64,9 @@ var iibpd = {
             colourTagName: '#800080',
             colourAttrName: '#000000',
             colourAttrValue: '#0000FF',
-            colourData: '#008000'
+            colourData: '#008000',
+            colourBackground: '#dae3ec',
+            colourForeground: '#000000'
         }, function (items) {
             iibpd.options.enableIIBPD = items.enableIIBPD;
             iibpd.options.discardMetadata = items.discardMetadata;
@@ -75,25 +77,28 @@ var iibpd = {
             iibpd.options.colourAttrName = items.colourAttrName;
             iibpd.options.colourAttrValue = items.colourAttrValue;
             iibpd.options.colourData = items.colourData;
-
+            iibpd.options.colourBackground = items.colourBackground;
+            iibpd.options.colourForeground = items.colourForeground;
             if (iibpd.options.enableIIBPD) {
                 var element, arrEl = document.getElementsByTagName('pre');
                 for (var i=0; i < arrEl.length; i++) {
                     element = arrEl[i];
                     LoadXMLString(element, element.textContent);
                 }
-            }
 
-            //load colour styles
-            var styleEl = document.createElement('style'),
-            styleSheet;
-            document.head.appendChild(styleEl);
-            styleSheet = styleEl.sheet;
-            styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + "}", 0);
-            styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + "}", 0);
-            styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + "}", 0);
-            styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + "}", 0);
-            styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:nth-last-child(3):after, .AttributeValue:nth-last-child(2):after, .AttributeValue:last-child:after {color:"+ iibpd.options.colourTagEnds +"}", 0);
+                //load colour styles
+                var styleEl = document.createElement('style'),
+                styleSheet;
+                document.head.appendChild(styleEl);
+                styleSheet = styleEl.sheet;
+                styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + "; transition: background-color 1s ease;}", 0);
+                styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + "; transition: background-color 1s ease;", 0);
+                styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + "; transition: background-color 1s ease;}", 0);
+                styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + "; transition: background-color 1s ease;}", 0);
+                styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:nth-last-child(3):after, .AttributeValue:nth-last-child(2):after, .AttributeValue:last-child:after {color:"+ iibpd.options.colourTagEnds +"; transition: background-color 1s ease;}", 0);
+                styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + "; transition: background-color 1s ease;}", 0);
+                styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + "; transition: color 1s ease;}", 0);
+            }
         });
     },
 
