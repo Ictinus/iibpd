@@ -41,8 +41,7 @@ input[type='color'] {
 }
 
 input[type='range'] {
-    margin-left: 0.8em;
-    width: 90%;
+    width: 70%;
 }
 
 fieldset {
@@ -54,12 +53,22 @@ fieldset {
 fieldset div {
     -webkit-column-count: 2;
 }
+div.col2 fieldset {
+    display: inline-block;
+}
 .colourPicker { display: inline-block; }
+div.col2 {
+    -webkit-column-count: 2;
+}
 
 span.reset {
     cursor: pointer;
     user-select: none;
 }
-span#autoOpenDepthDisplay {
+span.rangeDisplay {
     font-size: 2em;
+    padding-right: 6px;
+    min-width: 1em;
+    text-align: right;
+    display: inline-block;
 }

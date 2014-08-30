@@ -19,7 +19,7 @@ pre {
 	content:"</";
 	color: #000;
 }
-.NodeName.endTag:after, .AttributeValue:nth-last-child(2):after, .AttributeValue:nth-last-child(3):after {
+.NodeName.endTag:after, .AttributeValue.last-of-class:after {
 	content:">";
 	color: #000;
 }
@@ -59,12 +59,17 @@ pre {
 
     /*max-height: set by javascript*/
     overflow: hidden;
-    /*opacity: 1;*/
-    transition: max-height 0.4s ease-in-out;/*, opacity .5s ease-in;*/
+    transition: max-height 0.4s ease-in-out;
 }
 .Element > .Element {
     left:15px;
 }
+
+.AttributeValue:not(.last-of-class) {
+	display: inline-block;
+	min-width: 7em;
+}
+
 .Element_hide, .hide_metadata {
     max-height: 0 !important;
     /*opacity: 0;*/
@@ -85,4 +90,8 @@ pre {
 
 #content {
 	margin: 5px 0px;
+}
+
+td {
+	padding: 3px;
 }

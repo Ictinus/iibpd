@@ -133,16 +133,17 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	}
 
 	if (RootNode.childNodes.length === 0) {
-		var ClickableElement = AddTextNode(TagEmptyElement, ' ', 'Clickable'); //no action on this Clickable
+		var ClickableElement = AddTextNode(TagEmptyElement, ' ', ['Clickable']); //no action on this Clickable
 
 		//TagEmptyElement.appendChild(openTag.cloneNode(true)); // add '<'
 		AddNodeName(TagEmptyElement, RootNode.nodeName);
+		//TagEmptyElement.classList.add('noChildren');
 
 		for (var i = 0, attLen = RootNode.attributes.length; i < attLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
-			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
+			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, ['AttributeName']);
 			//TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
-			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
+			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', ['AttributeValue']);
 		}
 		//TagEmptyElement.appendChild(endEmptyTag.cloneNode(true)); //add ' />'
 		xmlHolderElement.appendChild(TagEmptyElement);
@@ -161,13 +162,13 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		var ClickableElement;
 		if (bSimpleContentExists) {
 			// no expand button
-			ClickableElement = AddTextNode(TagEmptyElement, ' ', 'Clickable'); //no action on this Clickable
+			ClickableElement = AddTextNode(TagEmptyElement, ' ', ['Clickable']); //no action on this Clickable
 		} else {
 			// expand button
 			if (indent < iibpd.options.autoOpenDepth) {
-				ClickableElement = AddTextNode(TagEmptyElement, '-', 'Clickable');
+				ClickableElement = AddTextNode(TagEmptyElement, '-', ['Clickable']);
 			} else {
-				ClickableElement = AddTextNode(TagEmptyElement, '+', 'Clickable');
+				ClickableElement = AddTextNode(TagEmptyElement, '+', ['Clickable']);
 			}
 			ClickableElement.onclick = function(e) {
 				ToggleElementVisibility(this, e.ctrlKey);
@@ -180,29 +181,25 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		// element attributes
 		for (var i = 0, attrLen = RootNode.attributes.length; i < attrLen; ++i) {
 			CurrentAttribute = RootNode.attributes.item(i);
-			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, 'AttributeName');
+			AddTextNode(TagEmptyElement, ' ' + CurrentAttribute.nodeName, ['AttributeName']);
 
 			//TagEmptyElement.appendChild(equalsSpan.cloneNode(true)); // add '='
 
-			AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', 'AttributeValue');
+			if (i === attrLen-1) {
+				AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', ['AttributeValue', 'last-of-class']);
+			} else {
+				AddTextNode(TagEmptyElement, '"' + CurrentAttribute.value + '"', ['AttributeValue']);
+			}
 		}
 
 		//TagEmptyElement.appendChild(endTag.cloneNode(true)); //add '>'
 
 		if (bSimpleContentExists) { //display inline simple content
-			AddTextNode(TagEmptyElement, NodeContent, 'NodeValue');
+			AddTextNode(TagEmptyElement, NodeContent, ['NodeValue']);
 		}
 
 		//endTag </nodeName>
-		var endOfElement = openEndTag.cloneNode(true);
-		endOfElement.classList.add('endTag');
-		if (indent < iibpd.options.autoOpenDepth) { endOfElement.classList.add('fade'); }
-		//TagEmptyElement.appendChild(endOfElement); //add '</'
-		AddNodeName(TagEmptyElement, RootNode.nodeName, true, indent < iibpd.options.autoOpenDepth); // true = mark as endTag, true=fade
-		endOfElement = endTag.cloneNode(true);
-		endOfElement.classList.add('endTag');
-		if (indent < iibpd.options.autoOpenDepth) { endOfElement.classList.add('fade'); }
-		//TagEmptyElement.appendChild(endOfElement); //add '>'
+		AddNodeName(TagEmptyElement, RootNode.nodeName, true, false); // true = mark as endTag, true=fade
 
 		xmlHolderElement.appendChild(TagEmptyElement);
 
@@ -224,7 +221,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 			}
 
 			// end the expanded xml object
-			AddTextNode(TagElement, ' ', 'Clickable');
+			AddTextNode(TagElement, ' ', ['Clickable']);
 
 			//TagElement.appendChild(openEndTag.cloneNode(true)); //add '</'
 			AddNodeName(TagElement, RootNode.nodeName, true, false);
@@ -249,11 +246,11 @@ function AddNodeName(ParentNode, Text, bEndTag, bFade) {
 	}
 	return NewNode;
 }
-function AddTextNode(ParentNode, Text, Class) {
+function AddTextNode(ParentNode, Text, Classes) {
 	NewNode = emptySpan.cloneNode(false);
-	if (Class) {
-		NewNode.className = Class;
-	}
+	Classes.map( function(aClass) {
+		NewNode.classList.add(aClass);
+	});
 	if (Text) {
 		NewNode.textContent = Text;
 	}

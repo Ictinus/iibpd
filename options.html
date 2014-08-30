@@ -11,13 +11,20 @@ iibpd options</title>
 <h4>Configuration</h4>
 <fieldset>
     <legend>Metadata</legend>
-        <input type=checkbox id="discardMetadata"><label for="discardMetadata">Discard</label></input> - <span class="italicised">fastest!</span><br>
-        <input type=checkbox id="hide_metadata"><label for="hide_metadata">Hide</label></input>
+        <input type=radio name="metaData" id="discardMetadata"><label for="discardMetadata">Discard&nbsp;-&nbsp;<span class="italicised">fastest!</span></label></input>
+        <input type=radio name="metaData" id="hide_metadata"><label for="hide_metadata">Hide</label></input>
+        <input type=radio name="metaData" id="show_metadata"><label for="show_metadata">Show</label></input>
 </fieldset>
-<fieldset>
-    <legend>Auto Open Depth</legend>
-    <span id="autoOpenDepthDisplay">0</span> <input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input>
-</fieldset>
+<div class="col2">
+    <fieldset>
+        <legend>Auto Open Depth</legend>
+        <span class="rangeDisplay" id="autoOpenDepthDisplay">0</span> <input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input>
+    </fieldset>
+    <fieldset>
+        <legend>Attribute Width</legend>
+        <span class="rangeDisplay" id="attrWidthDisplay">0</span> <input type="range" id="attrWidth" inputmode="numeric" min="0" max="20" required></input>
+    </fieldset>
+</div>
 <fieldset>
     <legend>Colours</legend>
     <div>

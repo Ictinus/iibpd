@@ -60,6 +60,7 @@ var iibpd = {
             discardMetadata: true,
             hide_metadata: true,
             autoOpenDepth: 1,
+            attrWidth: 7,
             colourTagEnds: '#000000',
             colourTagName: '#800080',
             colourAttrName: '#000000',
@@ -72,6 +73,7 @@ var iibpd = {
             iibpd.options.discardMetadata = items.discardMetadata;
             iibpd.options.hide_metadata = items.hide_metadata;
             iibpd.options.autoOpenDepth = items.autoOpenDepth;
+            iibpd.options.attrWidth = items.attrWidth;
             iibpd.options.colourTagEnds = items.colourTagEnds;
             iibpd.options.colourTagName = items.colourTagName;
             iibpd.options.colourAttrName = items.colourAttrName;
@@ -85,7 +87,6 @@ var iibpd = {
                     element = arrEl[i];
                     LoadXMLString(element, element.textContent);
                 }
-
                 //load colour styles
                 var styleEl = document.createElement('style'),
                 styleSheet;
@@ -98,6 +99,7 @@ var iibpd = {
                 styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:nth-last-child(3):after, .AttributeValue:nth-last-child(2):after, .AttributeValue:last-child:after {color:"+ iibpd.options.colourTagEnds +"; transition: background-color 1s ease;}", 0);
                 styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + "; transition: background-color 1s ease;}", 0);
                 styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + "; transition: color 1s ease;}", 0);
+                styleSheet.insertRule(".AttributeValue:not(.last-of-class) {min-width: " + iibpd.options.attrWidth + "em;}", 0);
             }
         });
     },
@@ -107,6 +109,7 @@ var iibpd = {
 
         document.addEventListener("keydown", iibpd.processKey, true);
         chrome.storage.onChanged.addListener(function (changes, namespace) {
+            var options = {};
             for (key in changes) {
                 var storageChange = changes[key];
                 if (iibpd.debug) {
@@ -119,7 +122,7 @@ var iibpd = {
                 }
                 if (key === "hide_metadata") {
                     iibpd.options.hide_metadata = storageChange.newValue;
-                    iibpd.processConfigOptions();
+                    options.metaData = true;
                 }
                 if (key === "autoOpenDepth") {
                     iibpd.options.autoOpenDepth = storageChange.newValue;
@@ -127,20 +130,33 @@ var iibpd = {
                 if (key === "discardMetadata") {
                     iibpd.options.discardMetadata = storageChange.newValue;
                 }
+                if (key === "attrWidth") {
+                    iibpd.options.attrWidth = storageChange.newValue;
+                    options.attrWidth = true;
+                }
             }
+            iibpd.processConfigOptions(options);
         });
     },
 
-    processConfigOptions: function () {
-        //hide/show metadata
-        var arrMetadata = document.querySelectorAll("div.metadata");
-        for (var i=0; i < arrMetadata.length; i++) {
-            if (!!arrMetadata[i]) {
-                arrMetadata[i].classList.toggle("hide_metadata", iibpd.options.hide_metadata);
+    processConfigOptions: function (options) {
+        if (!!options.metaData) {
+            //hide/show metadata
+            var arrMetadata = document.querySelectorAll("div.metadata");
+            for (var i=0; i < arrMetadata.length; i++) {
+                if (!!arrMetadata[i]) {
+                    arrMetadata[i].classList.toggle("hide_metadata", iibpd.options.hide_metadata);
+                }
             }
         }
 
-
+        if (!!options.attrWidth) {
+            var styleEl = document.createElement('style'),
+            styleSheet;
+            document.head.appendChild(styleEl);
+            styleSheet = styleEl.sheet;
+            styleSheet.insertRule(".AttributeValue:not(.last-of-class) {min-width: " + iibpd.options.attrWidth + "em;}", 0);
+        }
     },
 
     load: function () {
