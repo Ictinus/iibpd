@@ -92,15 +92,17 @@ var iibpd = {
                 styleSheet;
                 document.head.appendChild(styleEl);
                 styleSheet = styleEl.sheet;
-                styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + "; transition: background-color 1s ease;}", 0);
-                styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + "; transition: background-color 1s ease;", 0);
-                styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + "; transition: background-color 1s ease;}", 0);
-                styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + "; transition: background-color 1s ease;}", 0);
-                styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:nth-last-child(3):after, .AttributeValue:nth-last-child(2):after, .AttributeValue:last-child:after {color:"+ iibpd.options.colourTagEnds +"; transition: background-color 1s ease;}", 0);
-                styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + "; transition: background-color 1s ease;}", 0);
-                styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + "; transition: color 1s ease;}", 0);
-                styleSheet.insertRule(".AttributeValue:not(.last-of-class) {min-width: " + iibpd.options.attrWidth + "em;}", 0);
+                styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + ";}", 0);
+                styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + ";", 0);
+                styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + ";}", 0);
+                styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + ";}", 0);
+                styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:last-child:after, .AttributeValue.last-of-class:after {color:"+ iibpd.options.colourTagEnds +";}", 0);
+                styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + ";}", 0);
+                styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + ";}", 0);
+                styleSheet.insertRule(".AttributeValue {min-width: " + iibpd.options.attrWidth + "em;}", 0);
             }
+
+            console.info("iibpd.options: " + JSON.stringify(iibpd.options));
         });
     },
 
@@ -134,6 +136,34 @@ var iibpd = {
                     iibpd.options.attrWidth = storageChange.newValue;
                     options.attrWidth = true;
                 }
+                if (key === "colourTagEnds") {
+                    iibpd.options.colourTagEnds = storageChange.newValue;
+                    options.colourTagEnds = true;
+                }
+                if (key === "colourTagName") {
+                    iibpd.options.colourTagName = storageChange.newValue;
+                    options.colourTagName = true;
+                }
+                if (key === "colourAttrName") {
+                    iibpd.options.colourAttrName = storageChange.newValue;
+                    options.colourAttrName = true;
+                }
+                if (key === "colourAttrValue") {
+                    iibpd.options.colourAttrValue = storageChange.newValue;
+                    options.colourAttrValue = true;
+                }
+                if (key === "colourData") {
+                    iibpd.options.colourData = storageChange.newValue;
+                    options.colourData = true;
+                }
+                if (key === "colourForeground") {
+                    iibpd.options.colourForeground = storageChange.newValue;
+                    options.colourForeground = true;
+                }
+                if (key === "colourBackground") {
+                    iibpd.options.colourBackground = storageChange.newValue;
+                    options.colourBackground = true;
+                }
             }
             iibpd.processConfigOptions(options);
         });
@@ -150,13 +180,36 @@ var iibpd = {
             }
         }
 
+        // stylesheet updates
+        var styleEl = document.createElement('style'),
+        styleSheet;
+        document.head.appendChild(styleEl);
+        styleSheet = styleEl.sheet;
         if (!!options.attrWidth) {
-            var styleEl = document.createElement('style'),
-            styleSheet;
-            document.head.appendChild(styleEl);
-            styleSheet = styleEl.sheet;
-            styleSheet.insertRule(".AttributeValue:not(.last-of-class) {min-width: " + iibpd.options.attrWidth + "em;}", 0);
+            styleSheet.insertRule(".AttributeValue {min-width: " + iibpd.options.attrWidth + "em;}", 0);
         }
+        if (!!options.colourTagEnds) {
+            styleSheet.insertRule(".NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .AttributeValue:last-child:after, .AttributeValue.last-of-class:after {color:"+ iibpd.options.colourTagEnds +";}", 0);
+        }
+        if (!!options.colourTagName) {
+            styleSheet.insertRule(".NodeName, .Clickable {color: " + iibpd.options.colourTagName + ";}", 0);
+        }
+        if (!!options.colourAttrName) {
+            styleSheet.insertRule(".AttributeName {color: " + iibpd.options.colourAttrName + ";", 0);
+        }
+        if (!!options.colourAttrValue) {
+            styleSheet.insertRule(".AttributeValue {color: " + iibpd.options.colourAttrValue + ";}", 0);
+        }
+        if (!!options.colourData) {
+            styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + ";}", 0);
+        }
+        if (!!options.colourForeground) {
+            styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + ";}", 0);
+        }
+        if (!!options.colourBackground) {
+            styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + ";}", 0);
+        }
+
     },
 
     load: function () {

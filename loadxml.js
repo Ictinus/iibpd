@@ -151,7 +151,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 	} else { // mo child nodes
 
 		// build collapsed display elements
-		//Look for text content and display in single line
+		// Look for text content and display in single line
 		var NodeContent = null;
 		for (var i = 0, childNodesLen=RootNode.childNodes.length; i < childNodesLen; ++i) {
 			if (RootNode.childNodes.item(i).nodeName === '#text') {
@@ -199,7 +199,7 @@ function ShowXML(xmlHolderElement, RootNode, indent) {
 		}
 
 		//endTag </nodeName>
-		AddNodeName(TagEmptyElement, RootNode.nodeName, true, false); // true = mark as endTag, true=fade
+		AddNodeName(TagEmptyElement, RootNode.nodeName, true, (indent < iibpd.options.autoOpenDepth)); // true = mark as endTag, true=fade
 
 		xmlHolderElement.appendChild(TagEmptyElement);
 
