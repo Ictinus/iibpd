@@ -4,10 +4,6 @@ var iibpdOptions = {
         document.getElementById('attrWidthDisplay').textContent = document.getElementById('attrWidth').value;
     },
 
-    updateColours: function () {
-
-    },
-
     toggleDisabled: function (element, bDisabled) {
         if (bDisabled) {
             element.setAttribute("disabled", "disabled");
@@ -40,7 +36,6 @@ var iibpdOptions = {
             status.textContent = ' Options saved.';
             setTimeout(function() {
                 status.classList.add('fade');
-                //setTimeout(function () { status.textContent = ''; }, 500);
             }, 1000);
         });
     },
@@ -109,5 +104,5 @@ document.getElementById("resetColourBackground").addEventListener("click", funct
     document.getElementById("colourBackground").value = '#dae3ec';
 }, true);
 document.getElementById("resetColourForeground").addEventListener("click", function () {
-    document.getElementById("colourForeground").value = '#dae3ec';
+    document.getElementById("colourForeground").value = '#000000';
 }, true);
