@@ -9,32 +9,34 @@ pre {
 .NodeName {
     font-weight:bold;
     color: #800080;
-	transition: color 1s;
+	transition: color 2s;
 }
 .NodeName:not(.endTag):before {
 	content:"<";
 	color: #000;
-	transition: color 1s;
+	transition: color 2s;
 }
 .NodeName.endTag:before {
 	content:"</";
 	color: #000;
-	transition: color 1s;
+	transition: color 2s;
 }
 .NodeName:nth-last-child(2):after {
 	content:">";
+	color: #000;
+	transition: color 2s;
 }
 
 .NodeName.endTag:after {
 	content:">";
 	color: #000;
-	transition: color 1s;
+	transition: color 2s;
 }
 
 .AttributeName {
     font-weight:bold;
     color: black;
-	transition: color 1s;
+	transition: color 2s;
 }
 .AttributeName:after {
 	content:"=";
@@ -42,29 +44,33 @@ pre {
 
 .AttributeValue {
     color:blue;
-	transition: min-width 1s;
-	display: inline-block;
 	min-width: 7em;
-	transition: color 1s;
+	display: inline-block;
+	transition: min-width 2s, color 2s;
 }
 
 .AttributeValue:last-child:after {
 	content: " />";
 	float: right;
 	color: #000;
-	transition: color 1s;
+	transition: color 2s;
 }
 .AttributeValue.last-of-class:after {
 	content: ">";
 	float: right;
+	transition: color 2s;
 }
 .NodeValue {
     color: green;
-	transition: color 1s;
+	transition: color 2s;
+}
+.NodeName + .NodeValue:before {
+	content: ">";
+	color: #000;
 }
 .endTag {
    opacity: 1;
-   transition: opacity 1s;
+   transition: opacity 1s, color 2s;
 }
 .fade {
    opacity: 0;
@@ -89,7 +95,7 @@ pre {
     overflow: hidden;
 }
 .Clickable {
-    font-weight:900;
+    font-weight: 900;
     font-size:large;
     color: #800080;
     cursor:pointer;
@@ -97,7 +103,7 @@ pre {
     padding-right:5px;
     vertical-align:middle;
     user-select: none;
-	transition: color 1s;
+	transition: color 2s;
 }
 
 #content {
@@ -111,5 +117,5 @@ td {
 table {
 	font-family: "Lucida Console", Consolas, sans-serif;
 }
-table tr[id] { transition: background-color 1s;}
-table tr[id] td { transition: color 1s;}
+table tr[id] { transition: background-color 2s;}
+table tr[id] td { transition: color 2s;}
