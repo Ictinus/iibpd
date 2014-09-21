@@ -118,4 +118,4 @@ table {
 	font-family: "Lucida Console", Consolas, sans-serif;
 }
 table tr[id] { transition: background-color 2s;}
-table tr[id] td { transition: color 2s;}
+table tr[id] td, div.info1 { transition: color 2s;}

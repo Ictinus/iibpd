@@ -98,7 +98,7 @@ var iibpd = {
                 styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + ";}", 0);
                 styleSheet.insertRule(".NodeName + .NodeValue:before, .NodeName:not(.endTag):before, .NodeName.endTag:before, .NodeName.endTag:after, .NodeName:nth-last-child(2):after, .AttributeValue:last-child:after, .AttributeValue.last-of-class:after {color:"+ iibpd.options.colourTagEnds +";}", 0);
                 styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + ";}", 0);
-                styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + ";}", 0);
+                styleSheet.insertRule("table tr[id] td, div.info1 {color: " + iibpd.options.colourForeground + ";}", 0);
                 styleSheet.insertRule(".AttributeValue {min-width: " + iibpd.options.attrWidth + "em;}", 0);
             }
 
@@ -204,7 +204,7 @@ var iibpd = {
             styleSheet.insertRule(".NodeValue {color: " + iibpd.options.colourData + ";}", 0);
         }
         if (!!options.colourForeground) {
-            styleSheet.insertRule("table tr[id] td {color: " + iibpd.options.colourForeground + ";}", 0);
+            styleSheet.insertRule("table tr[id] td, div.info1 {color: " + iibpd.options.colourForeground + ";}", 0);
         }
         if (!!options.colourBackground) {
             styleSheet.insertRule("table tr[id] {background-color: " + iibpd.options.colourBackground + ";}", 0);
