@@ -3,31 +3,77 @@
 pre {
 	/* using line-height rather than Element.padding so to ease max-height calculations*/
 	line-height: 1.5em;
+	font-family: "Lucida Console", Consolas, monospace;
 }
-.Utility {
-    color: black;
-}
+
 .NodeName {
     font-weight:bold;
     color: #800080;
+	transition: color 2s;
 }
+.NodeName:not(.endTag):before {
+	content:"<";
+	color: #000;
+	transition: color 2s;
+}
+.NodeName.endTag:before {
+	content:"</";
+	color: #000;
+	transition: color 2s;
+}
+.NodeName:nth-last-child(2):after {
+	content:">";
+	color: #000;
+	transition: color 2s;
+}
+
+.NodeName.endTag:after {
+	content:">";
+	color: #000;
+	transition: color 2s;
+}
+
 .AttributeName {
     font-weight:bold;
     color: black;
+	transition: color 2s;
 }
+.AttributeName:after {
+	content:"=";
+}
+
 .AttributeValue {
     color:blue;
+	min-width: 7em;
+	display: inline-block;
+	transition: min-width 2s, color 2s;
+}
+
+.AttributeValue:last-child:after {
+	content: " />";
+	float: right;
+	color: #000;
+	transition: color 2s;
+}
+.AttributeValue.last-of-class:after {
+	content: ">";
+	float: right;
+	transition: color 2s;
 }
 .NodeValue {
     color: green;
+	transition: color 2s;
+}
+.NodeName + .NodeValue:before {
+	content: ">";
+	color: #000;
 }
 .endTag {
    opacity: 1;
-   transition: opacity .50s ease-in-out;
+   transition: opacity 1s, color 2s;
 }
 .fade {
    opacity: 0;
-   transition: opacity .25s ease-in-out;
 }
 .Element {
     border-left-color:#C2C2C2;
@@ -35,29 +81,45 @@ pre {
     border-left-style:solid;
     padding: 0px 0px;
     position: relative;
-
+	opacity: 1;
     /*max-height: set by javascript*/
     overflow: hidden;
-    /*opacity: 1;*/
-    transition: max-height 0.4s ease-in-out;/*, opacity .5s ease-in;*/
+    transition: max-height 0.5s ease-in-out, opacity 1s;
 }
 .Element > .Element {
     left:15px;
 }
 .Element_hide, .hide_metadata {
     max-height: 0 !important;
-    /*opacity: 0;*/
-    transition: max-height 0.4s ease-in-out; /*, opacity .5s ease-out;*/
+    opacity: 0;
     overflow: hidden;
-
 }
-.Clickable {    
-    font-weight:900;
+.Clickable {
+    font-weight: 900;
     font-size:large;
-    color: #800080; 
+    color: #800080;
     cursor:pointer;
     padding-left: 5px;
     padding-right:5px;
     vertical-align:middle;
     user-select: none;
+	transition: color 2s;
 }
+
+body {
+	background-size: auto 100%;
+}
+
+#content {
+	margin: 5px 0px;
+}
+
+td {
+	padding: 3px;
+}
+
+table {
+	font-family: Verdana, sans-serif;
+}
+table tr[id] { transition: background-color 1s;}
+table tr[id] td, div.info1 { transition: color 2s;}

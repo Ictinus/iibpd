@@ -7,23 +7,42 @@ iibpd options</title>
 <body>
 <div class="banner">Improved IBM BPM Process Debugger</div>
 <div id="config" class="content">
+<input type=checkbox id="enableIIBPD"><label for="enableIIBPD">Enable IIBPD</label></input><br>
 <h4>Configuration</h4>
-<input type=checkbox id="discardMetadata"><label for="discardMetadata">Discard Metadata</label></input> - <span class="italicised">fastest!</span><br>
-<input type=checkbox id="hide_metadata"><label for="hide_metadata">Hide Metadata</label></input><br><br>
-Auto open depth:  <span id="autoOpenDepthDisplay">0</span><br>
-<input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input>
+<fieldset>
+    <legend>Metadata</legend>
+        <input type=radio name="metaData" id="discardMetadata"><label for="discardMetadata">Discard&nbsp;-&nbsp;<span class="italicised">fastest!</span></label></input>
+        <input type=radio name="metaData" id="hide_metadata"><label for="hide_metadata">Hide</label></input>
+        <input type=radio name="metaData" id="show_metadata"><label for="show_metadata">Show</label></input>
+</fieldset>
+<div class="col2">
+    <fieldset>
+        <legend>Auto Open Depth</legend>
+        <span class="rangeDisplay" id="autoOpenDepthDisplay">0</span> <input type="range" id="autoOpenDepth" inputmode="numeric" min="0" max="9" required></input>
+    </fieldset>
+    <fieldset>
+        <legend>Attribute Width</legend>
+        <span class="rangeDisplay" id="attrWidthDisplay">0</span> <input type="range" id="attrWidth" inputmode="numeric" min="0" max="20" required></input>
+    </fieldset>
+</div>
+<fieldset>
+    <legend>Colours</legend>
+    <div>
+        <span class="colourPicker"><input type="color" id="colourTagEnds" value="#000000"> <span class="reset" id="resetColourTagEnds">&#8634;</span> <label for="colourTagEnds">Tag ends</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourTagName" value="#800080"> <span class="reset" id="resetColourTagName">&#8634;</span> <label for="colourTagName">Tag name</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourAttrName" value="#000000"> <span class="reset" id="resetColourAttrName">&#8634;</span> <label for="colourAttrName">Attribute name</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourAttrValue" value="#0000FF"> <span class="reset" id="resetColourAttrValue">&#8634;</span> <label for="colourAttrValue">Attribute value</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourData" value="#008000"> <span class="reset" id="resetColourData">&#8634;</span> <label for="colourData">Data</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourBackground" value="#dae3ec"> <span class="reset" id="resetColourBackground">&#8634;</span> <label for="colourBackground">Background</label></input></span>
+        <span class="colourPicker"><input type="color" id="colourForeground" value="#000000"> <span class="reset" id="resetColourForeground">&#8634;</span> <label for="colourForeground">Foreground</label></input></span>
+    </div>
+</fieldset>
 </div>
 <div id="hotkeys" class="content">
 <h4>Action/Hotkeys</h4>
 <div>Step: S, Enter, or Right arrow</div>
 <div>Step Over: SHIFT-S</div>
 <div>Run: R</div>
-</div>
-<div id="thanks" class="content">
-    <h4>With thanks to:</h4>
-    <ul>
-        <li>Lev Muchnik's <a href="http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html">LoadXML</a></li>
-    </ul> 
 </div>
 <div>
 <button id="save">Save</button><span id="status"></span>
