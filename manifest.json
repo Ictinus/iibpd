@@ -11,7 +11,9 @@
 		"matches":        		[ "file://*/*",
 								  "http://*/teamworks/*",
 								  "https://*/teamworks/*",
-								  "https://*/bpm/dev/teamworks/*"
+								  "https://*/bpm/dev/teamworks/*",
+								  "https://*/bpm/test/teamworks/*",
+								  "https://*/bpm/run/teamworks/*"
 								],
 		"run_at": "document_end"
 	} ],
