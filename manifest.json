@@ -10,7 +10,8 @@
 								  "loadxml.js"	 ],
 		"matches":        		[ "file://*/*",
 								  "http://*/teamworks/*",
-								  "https://*/teamworks/*"
+								  "https://*/teamworks/*",
+								  "https://*/bpm/dev/teamworks/*"
 								],
 		"run_at": "document_end"
 	} ],
